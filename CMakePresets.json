@@ -8,15 +8,14 @@
   "include": [],
   "configurePresets": [
     {
-      "name": "base",
-      "displayName": "Base Config",
+      "name": "ninja-base",
+      "displayName": "Base Ninja Config",
       "description": "Base configuration using Ninja generator",
       "generator": "Ninja",
       "hidden": true,
       "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
       "cacheVariables": {
-        "CMAKE_CXX_STANDARD": "23",
-        "VCPKG_TARGET_TRIPLET": "x64-mingw-dynamic"
+        "CMAKE_CXX_STANDARD": "23"
       },
       "warnings": {
         "dev": true,
@@ -28,10 +27,32 @@
       }
     },
     {
-      "name": "debug",
-      "inherits": "base",
-      "displayName": "Debug",
-      "description": "Debug configuration using Ninja generator",
+      "name": "clang-base",
+      "hidden": true,
+      "inherits": "ninja-base",
+      "cacheVariables": {}
+    },
+    {
+      "name": "mingw-base",
+      "hidden": true,
+      "inherits": "ninja-base",
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-mingw-dynamic"
+      }
+    },
+    {
+      "name": "windows-base",
+      "hidden": true,
+      "inherits": "ninja-base",
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows"
+      }
+    },
+    {
+      "name": "mingw-x64-debug",
+      "inherits": "mingw-base",
+      "displayName": "x64 Debug(MinGW)",
+      "description": "x64 Debug configuration using Ninja generator and MinGW",
       "binaryDir": "${sourceDir}/build/debug",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
@@ -39,10 +60,10 @@
       }
     },
     {
-      "name": "release",
-      "inherits": "base",
-      "displayName": "Release",
-      "description": "Release configuration using Ninja generator",
+      "name": "mingw-x64-release",
+      "inherits": "mingw-base",
+      "displayName": "x64 Release(MinGW)",
+      "description": "x64 Release configuration using Ninja generator and MinGW",
       "binaryDir": "${sourceDir}/build/release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
@@ -50,18 +71,5 @@
       }
     }
   ],
-  "buildPresets": [
-    {
-      "name": "debug",
-      "displayName": "Debug",
-      "configurePreset": "debug",
-      "verbose": true
-    },
-    {
-      "name": "release",
-      "displayName": "Release",
-      "configurePreset": "release",
-      "verbose": true
-    }
-  ]
+  "buildPresets": []
 }
